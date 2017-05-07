@@ -100,7 +100,7 @@
 
 /* Begin PBXFileReference section */
 		3FAA3EE71EBFC074004A3975 /* QuickBeforeAfterBehaviour.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickBeforeAfterBehaviour.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3FAA3EEA1EBFC074004A3975 /* QuickBeforeAfterBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBeforeAfterBehaviour.swift; sourceTree = "<group>"; };
+		3FAA3EEA1EBFC074004A3975 /* QuickBeforeAfterBehaviour.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = QuickBeforeAfterBehaviour.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3FAA3EEC1EBFC074004A3975 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FAA3EF01EBFC09F004A3975 /* Quick.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Quick.xcodeproj; path = Carthage/Checkouts/Quick/Quick.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
