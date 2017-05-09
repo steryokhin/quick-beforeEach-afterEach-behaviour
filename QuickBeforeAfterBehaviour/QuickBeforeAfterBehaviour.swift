@@ -2,6 +2,14 @@ import Quick
 
 class Spec: QuickSpec {
   override func spec() {
+    beforeSuite {
+      print("☕️ before suite")
+    }
+
+    afterSuite {
+      print("🗑 after suite")
+    }
+
     describe("beforeEach and afterEach behaviour") {
       beforeEach {
         print("⭐️ top before each")
