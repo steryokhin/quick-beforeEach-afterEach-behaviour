@@ -30,8 +30,9 @@ xcuserdata
 # Swift Package Manager
 #
 # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
-Packages/
 .build/
+# Package.pins
+# Package.resolved
 
 # CocoaPods
 #
@@ -63,3 +64,6 @@ fastlane/screenshots
 
 # Quick
 Quick.framework.zip
+
+# Jazzy docs
+*.tgz

@@ -9,7 +9,7 @@ overriding the `QuickConfiguration.Type.configure()` class method:
 import Quick
 
 class ProjectDataTestConfiguration: QuickConfiguration {
-  override class func configure(configuration: Configuration) {
+  override class func configure(_ configuration: Configuration) {
     // ...set options on the configuration object here.
   }
 }
@@ -44,7 +44,7 @@ import Quick
 import Sea
 
 class FinConfiguration: QuickConfiguration {
-  override class func configure(configuration: Configuration) {
+  override class func configure(_ configuration: Configuration) {
     configuration.beforeEach {
       Dorsal.sharedFin().height = 0
     }
@@ -78,7 +78,7 @@ example being run:
 import Quick
 
 class SeaConfiguration: QuickConfiguration {
-  override class func configure(configuration: Configuration) {
+  override class func configure(_ configuration: Configuration) {
     configuration.beforeEach { exampleMetadata in
       // ...use the example metadata object to access the current example name, and more.
     }

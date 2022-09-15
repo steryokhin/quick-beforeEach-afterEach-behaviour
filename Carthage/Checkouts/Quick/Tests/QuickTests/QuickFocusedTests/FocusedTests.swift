@@ -3,11 +3,19 @@ import Nimble
 import XCTest
 
 class FunctionalTests_FocusedSpec_SharedExamplesConfiguration: QuickConfiguration {
-    override class func configure(_ configuration: Configuration) {
+    override class func configure(_ configuration: QCKConfiguration) {
         sharedExamples("two passing shared examples") {
             it("has an example that passes (4)") {}
             it("has another example that passes (5)") {}
         }
+    }
+}
+
+class FunctionalTests_FocusedSpec_Behavior: Behavior<Void> {
+    override static func spec(_ aContext: @escaping () -> Void) {
+        it("pass once") { expect(true).to(beTruthy()) }
+        it("pass twice") { expect(true).to(beTruthy()) }
+        it("pass three times") { expect(true).to(beTruthy()) }
     }
 }
 
@@ -28,6 +36,7 @@ class _FunctionalTests_FocusedSpec_Focused: QuickSpec {
         }
 
         fitBehavesLike("two passing shared examples")
+        fitBehavesLike(FunctionalTests_FocusedSpec_Behavior.self) { () -> Void in }
     }
 }
 
@@ -39,21 +48,32 @@ class _FunctionalTests_FocusedSpec_Unfocused: QuickSpec {
             beforeEach { assert(false) }
             it("has an example that fails, but is never run") { fail() }
         }
+
+        sharedExamples("empty shared example") { _ in
+            // https://github.com/Quick/Quick/pull/901#issuecomment-530816224
+        }
     }
 }
 
 final class FocusedTests: XCTestCase, XCTestCaseProvider {
     static var allTests: [(String, (FocusedTests) -> () throws -> Void)] {
         return [
-            ("testOnlyFocusedExamplesAreExecuted", testOnlyFocusedExamplesAreExecuted)
+            ("testOnlyFocusedExamplesAreExecuted", testOnlyFocusedExamplesAreExecuted),
         ]
     }
 
     func testOnlyFocusedExamplesAreExecuted() {
+        #if SWIFT_PACKAGE
         let result = qck_runSpecs([
             _FunctionalTests_FocusedSpec_Focused.self,
-            _FunctionalTests_FocusedSpec_Unfocused.self
+            _FunctionalTests_FocusedSpec_Unfocused.self,
         ])
-        XCTAssertEqual(result?.executionCount, 5 as UInt)
+        #else
+        let result = qck_runSpecs([
+            _FunctionalTests_FocusedSpec_Unfocused.self,
+            _FunctionalTests_FocusedSpec_Focused.self,
+        ])
+        #endif
+        XCTAssertEqual(result?.executionCount, 8)
     }
 }

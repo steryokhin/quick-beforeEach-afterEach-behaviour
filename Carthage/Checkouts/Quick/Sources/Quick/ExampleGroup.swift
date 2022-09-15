@@ -31,21 +31,24 @@ final public class ExampleGroup: NSObject {
         Returns a list of examples that belong to this example group,
         or to any of its descendant example groups.
     */
+    #if canImport(Darwin)
+    @objc
     public var examples: [Example] {
-        var examples = childExamples
-        for group in childGroups {
-            examples.append(contentsOf: group.examples)
-        }
-        return examples
+        return childExamples + childGroups.flatMap { $0.examples }
     }
+    #else
+    public var examples: [Example] {
+        return childExamples + childGroups.flatMap { $0.examples }
+    }
+    #endif
 
     internal var name: String? {
-        if let parent = parent {
-            guard let name = parent.name else { return description }
-            return "\(name), \(description)"
-        } else {
+        guard let parent = parent else {
             return isInternalRootExampleGroup ? nil : description
         }
+
+        guard let name = parent.name else { return description }
+        return "\(name), \(description)"
     }
 
     internal var filterFlags: FilterFlags {
@@ -58,18 +61,10 @@ final public class ExampleGroup: NSObject {
         return aggregateFlags
     }
 
-    internal var befores: [BeforeExampleWithMetadataClosure] {
-        var closures = Array(hooks.befores.reversed())
+    internal var wrappers: [AroundExampleWithMetadataClosure] {
+        var closures = Array(hooks.wrappers.reversed())
         walkUp { group in
-            closures.append(contentsOf: Array(group.hooks.befores.reversed()))
-        }
-        return Array(closures.reversed())
-    }
-
-    internal var afters: [AfterExampleWithMetadataClosure] {
-        var closures = hooks.afters
-        walkUp { group in
-            closures.append(contentsOf: group.hooks.afters)
+            closures.append(contentsOf: group.hooks.wrappers.reversed())
         }
         return closures
     }
